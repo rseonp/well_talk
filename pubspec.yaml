@@ -7,10 +7,16 @@ environment:
   sdk: '>=3.0.6 <4.0.0'
 
 dependencies:
+  file_picker: ^5.3.3
   flutter:
     sdk: flutter
+  flutter_chat_types: ^3.6.2
   flutter_chat_ui: ^1.6.9
+  flutter_link_previewer: ^3.2.2
+  http: ^1.1.0
   image_picker: ^1.0.2
+  open_filex: ^4.3.2
+  path_provider: ^2.1.0
 
 dev_dependencies:
   flutter_test:
