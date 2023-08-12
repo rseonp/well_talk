@@ -5,18 +5,25 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "well_talk",
+            "name": "Well Talk (Chrome)",
+            "request": "launch",
+            "type": "chrome",
+            "url": "http://localhost:8080",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Well Talk",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "well_talk (profile mode)",
+            "name": "Well Talk (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "well_talk (release mode)",
+            "name": "Well Talk (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
