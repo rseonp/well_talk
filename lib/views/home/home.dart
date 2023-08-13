@@ -56,54 +56,27 @@ class _HomeViewState extends State<HomeView> {
           double newheight = height - padding.top - padding.bottom;
 
           return SafeArea(
+            bottom: true,
             child: SizedBox(
               height: newheight / 3,
               child: GridView.count(
-                scrollDirection: Axis.horizontal,
-                crossAxisCount: 2,
-                childAspectRatio: 0.5,
-                // Generate 6 widgets that display their index in the List.
-                children: List.generate(6, (index) {
-                  return Center(child: Icon(Icons.favorite)
-                      // child: Text(
-                      //   'Item $index',
-                      //   style: Theme.of(context).textTheme.headlineSmall,
-                      // ),
-                      );
-                }),
+                crossAxisCount: 3,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _handleImageSelection();
+                      },
+                      icon: Icon(Icons.image)),
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _handleFileSelection();
+                      },
+                      icon: Icon(Icons.file_copy)),
+                  IconButton(onPressed: null, icon: Icon(Icons.video_call))
+                ],
               ),
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.stretch,
-              //   children: <Widget>[
-              //     TextButton(
-              //       onPressed: () {
-              //         Navigator.pop(context);
-              //         _handleImageSelection();
-              //       },
-              //       child: const Align(
-              //         alignment: AlignmentDirectional.centerStart,
-              //         child: Text('Photo'),
-              //       ),
-              //     ),
-              //     TextButton(
-              //       onPressed: () {
-              //         Navigator.pop(context);
-              //         _handleFileSelection();
-              //       },
-              //       child: const Align(
-              //         alignment: AlignmentDirectional.centerStart,
-              //         child: Text('File'),
-              //       ),
-              //     ),
-              //     TextButton(
-              //       onPressed: () => Navigator.pop(context),
-              //       child: const Align(
-              //         alignment: AlignmentDirectional.centerStart,
-              //         child: Text('Cancel'),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ),
           );
         });
