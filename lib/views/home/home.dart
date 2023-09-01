@@ -17,6 +17,10 @@ String randomString() {
   return base64UrlEncode(values);
 }
 
+//maybe pull out into some global utils file eventually?
+double width = 0;
+double height = 0;
+
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -29,16 +33,21 @@ class _HomeViewState extends State<HomeView> {
   final _user = const types.User(id: '82091008-a484-4a89-ae75-a22bf8d6f3ac');
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        body: Chat(
-          messages: _messages,
-          onAttachmentPressed: _handleAttachmentPressed,
-          onMessageTap: _handleMessageTap,
-          onPreviewDataFetched: _handlePreviewDataFetched,
-          onSendPressed: _handleSendPressed,
-          user: _user,
-        ),
-      );
+  Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    height = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      body: Chat(
+        messages: _messages,
+        onAttachmentPressed: _handleAttachmentPressed,
+        onMessageTap: _handleMessageTap,
+        onPreviewDataFetched: _handlePreviewDataFetched,
+        onSendPressed: _handleSendPressed,
+        user: _user,
+      ),
+    );
+  }
 
   void _addMessage(types.Message message) {
     setState(() {
@@ -50,62 +59,49 @@ class _HomeViewState extends State<HomeView> {
     showModalBottomSheet<void>(
         context: context,
         builder: (BuildContext context) {
-          double width = MediaQuery.of(context).size.width;
-          double height = MediaQuery.of(context).size.height;
-          var padding = MediaQuery.of(context).padding;
-          double newheight = height - padding.top - padding.bottom;
-
-          return SafeArea(
-            child: SizedBox(
-              height: newheight / 3,
-              child: GridView.count(
-                scrollDirection: Axis.horizontal,
-                crossAxisCount: 2,
-                childAspectRatio: 0.5,
-                // Generate 6 widgets that display their index in the List.
-                children: List.generate(6, (index) {
-                  return Center(child: Icon(Icons.favorite)
-                      // child: Text(
-                      //   'Item $index',
-                      //   style: Theme.of(context).textTheme.headlineSmall,
-                      // ),
-                      );
-                }),
-              ),
-              // Column(
-              //   crossAxisAlignment: CrossAxisAlignment.stretch,
-              //   children: <Widget>[
-              //     TextButton(
-              //       onPressed: () {
-              //         Navigator.pop(context);
-              //         _handleImageSelection();
-              //       },
-              //       child: const Align(
-              //         alignment: AlignmentDirectional.centerStart,
-              //         child: Text('Photo'),
-              //       ),
-              //     ),
-              //     TextButton(
-              //       onPressed: () {
-              //         Navigator.pop(context);
-              //         _handleFileSelection();
-              //       },
-              //       child: const Align(
-              //         alignment: AlignmentDirectional.centerStart,
-              //         child: Text('File'),
-              //       ),
-              //     ),
-              //     TextButton(
-              //       onPressed: () => Navigator.pop(context),
-              //       child: const Align(
-              //         alignment: AlignmentDirectional.centerStart,
-              //         child: Text('Cancel'),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-            ),
-          );
+          return SizedBox(
+              height: height / 3,
+              child: SafeArea(
+                  bottom: true,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                _handleImageSelection();
+                              },
+                              icon: Icon(Icons.image)),
+                          IconButton(
+                              onPressed: () {},
+                              icon: Icon(Icons.calendar_month)),
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.videocam)),
+                          IconButton(
+                              onPressed: () {}, icon: Icon(Icons.person)),
+                        ],
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                  _handleFileSelection();
+                                },
+                                icon: Icon(Icons.file_copy)),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.call)),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.medication)),
+                            IconButton(
+                                onPressed: () {}, icon: Icon(Icons.emergency)),
+                          ]),
+                    ],
+                  )));
         });
   }
 
